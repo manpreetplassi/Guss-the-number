@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .start-btn {
+        background-color: rgb(197, 227, 237);
+        font-size: 6vh;
+        text-align: center;
+        padding: 8.305647840531561vh;
+        border: 0.8305647840531561vh solid rgb(144, 175, 238);
+        border-radius: 1.6611295681063123vh;
+        cursor: pointer;
+        width: 23vw;
+    }
+
+    .open-btn {
+        background-color: rgb(197, 227, 237);
+        font-size: 6vh;
+        text-align: center;
+        padding: 8.305647840531561vh;
+        border: 0.8305647840531561vh solid rgb(144, 175, 238);
+        border-radius: 1.6611295681063123vh;
+        cursor: pointer;
+        width: 23vw;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: space-around;
+        margin: 2% 15% 0;
+    }
+
+    .content {
+        background-color: rgb(197, 227, 237);
+        font-size: 6vh;
+        text-align: center;
+        padding: 13.289036544850498vh;
+        border: 0.8305647840531561vh solid rgb(144, 175, 238);
+        border-radius: 1.6611295681063123vh;
+        cursor: pointer;
+        width: 46vw;
+        /* display: flex; */
+        align-content: center;
+        margin: 2% auto 0;
+    }
+    nav{
+        background-color: rgb(129, 175, 215);
+        text-align: center;
+        padding: 2vh;
+        margin: 2vh;
+        border-radius: 2vh;
+        border: 1vh solid rgb(129, 175, 215);
+    }
+    @media screen  and (max-width: 950px){
+        .btn{
+            display: block;
+            margin: auto;
+        }
+        .open-btn , .start-btn{
+            width: 45vw;
+            margin: auto;
+            margin-bottom: 1vh;
+            font-size: 5vw;
+            padding: 4vh;
+            border: 0.8305647840531561vh solid rgb(144, 175, 238);
+            border-radius: 1vh;
+        }
+        .content{
+            width: 70vw;
+            margin: auto;
+            margin-bottom: 1vh;
+            font-size: 7vw;
+            padding: 4vh;
+            border: 0.8305647840531561vh solid rgb(144, 175, 238);
+            border-radius: 1vh;
+        }
+    }
+</style>
+
+<body>
+    <nav>
+        Guess The Number
+    </nav>
+    <div class="container">
+        <div class="btn" id="id-btn">
+            <div class="open-btn" id="id-open-btn">
+                Refresh the game
+            </div>
+            <div class="start-btn" id="id-start-btn">
+                Let's Start the game
+            </div>
+        </div>
+        <div class="content" id="id-content">
+            <div class="win" id="id-win"></div>
+            <div class="totalscore">Total score: 10</div>
+            <div class="class-scr" id="id-scr">Your score: </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    let start_btn = document.getElementById("id-start-btn");
+    let open_btn = document.getElementById("id-open-btn");
+    let hint = document.getElementById("id-hint");
+    let win = document.getElementById("id-win");
+    let scr = document.getElementById("id-scr");
+    let content = document.getElementById("id-content");
+
+    let number = Math.floor(Math.random() * 100);
+    number = Number.parseInt(number);
+    let i = 0;
+    let score = 10;
+    let enternum = 0;
+    function game_loop() {
+        while (i < 10) {
+            let enternum = Number.parseInt(prompt("enter number that you guess"));
+            if (enternum == number) {
+                win.innerText = `You guessed the number: ${number}`;
+                break;
+            }
+            // hints
+            else if (i == 4) {
+                for (let j = 0, k = 10; j < 90 && k <= 100; j = j + 10, k = k + 10) {
+                    if ((number >= j) && (number <= k)) {
+                        alert(`number is between ${j} and ${k}`);
+                    }
+                }
+            }
+            else if (enternum > number) {
+                alert("your number is greater than rendom number");
+            }
+            else if (enternum < number) {
+                alert("your number is smaller than rendom number");
+            }
+            i++;
+            score--;
+        }
+        return score;
+    }
+
+    open_btn.addEventListener("click", () => {
+        location.reload();
+    })
+    start_btn.addEventListener("click", () => {
+        game_loop();
+        if (score == 0) {
+            win.innerText = `You loss the game`;
+        }
+        scr.innerText = "Your score: " + score;
+    })
+</script>
+
+</html>
